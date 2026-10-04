@@ -2,7 +2,7 @@
 // ===== ATUR JAM HITUNG MUNDUR DI SINI (waktu WITA) =====
 // Hitung mundur berjalan MENUJU tanggal & jam di bawah. Pastikan tanggalnya di MASA DEPAN.
 // Kalau tanggal sudah lewat, semua angka jadi 00 dan tombol langsung terbuka (itu sebabnya terlihat "tidak bergerak").
-const TARGET = {tahun:2026, bulan:10, tanggal:4, jam:00, menit:00, detik:2};
+const TARGET = {tahun:2026, bulan:10, tanggal:4, jam:23, menit:59, detik:59};
 // Uji coba cepat: isi mis. 2 -> hitung mundur 2 menit dari sekarang (TARGET diabaikan). Kembalikan ke 0 saat sudah live.
 const TEST_MENIT = 0;
 const _p=n=>String(n).padStart(2,'0');
