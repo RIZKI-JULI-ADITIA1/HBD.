@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Her Special Day</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><clipPath id="hc" clipPathUnits="objectBoundingBox"><path d="M0.5 1C0.1 0.7 0 0.5 0 0.3C0 0.12 0.13 0 0.27 0C0.4 0 0.47 0.07 0.5 0.16C0.53 0.07 0.6 0 0.73 0C0.87 0 1 0.12 1 0.3C1 0.5 0.9 0.7 0.5 1Z"/></clipPath><linearGradient id="lvg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff6e6"/><stop offset=".45" stop-color="#F2A6A6"/><stop offset="1" stop-color="#E6C594"/></linearGradient></defs></svg>
+<div class="mesh" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
+<canvas id="stars"></canvas>
+<div class="vig"></div>
+
+<nav class="glass">
+  <span class="brand">HSD</span>
+  <div id="dots" aria-hidden="true"></div>
+  <span id="chip" class="chip">● WITA</span>
+</nav>
+
+<main>
+  <!-- TAHAP 1: Countdown Vault -->
+  <section class="stage active" id="s1" data-stage="1">
+    <p class="eyebrow r">Menghitung hari</p>
+    <h1 class="display r"><span class="ln l1">Her Special Day</span><span class="ln l2">is Coming</span></h1>
+    <div class="timer glass r" role="timer" aria-label="Hitung mundur">
+      <div class="u"><b id="d">00</b><span>Hari</span></div><i class="sep">:</i>
+      <div class="u"><b id="h">23</b><span>Jam</span></div><i class="sep">:</i>
+      <div class="u"><b id="m">59</b><span>Menit</span></div><i class="sep">:</i>
+      <div class="u"><b id="s">59</b><span>Detik</span></div>
+    </div>
+    <button id="gift" class="vault locked r" aria-disabled="true">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path class="shackle" d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+      <span>Open Her Gift</span>
+    </button>
+    <p id="status" class="status r"></p>
+    <p id="wita" class="wita r"></p>
+  </section>
+
+  <!-- TAHAP 2: Jukebox & Gift Unboxing -->
+  <section class="stage" id="s2" data-stage="2">
+    <p class="eyebrow">✦ Jukebox ✦</p>
+    <h2 class="display"><span class="ln l1 sm">Pilih Lagu Kita</span></h2>
+    <div class="s2wrap">
+      <div class="tcol"><div id="tracks" class="tracks"></div><button id="mstop" class="tbtn">■ Matikan musik</button></div>
+      <div class="giftbox">
+        <div id="prism" class="prism" role="button" tabindex="0" aria-label="Buka kado"><canvas id="pc"></canvas></div>
+        <p id="hint" class="status">Pilih satu lagu dulu, lalu ketuk kadonya ✦</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAHAP 3: Romantic Hero & Love Letter -->
+  <section class="stage" id="s3" data-stage="3">
+    <div class="fr-layer" id="frLayer" aria-hidden="true"></div>
+    <p class="eyebrow">A love letter for you</p>
+    <h2 id="h3" class="gold-h">Your Special Day</h2>
+    <p id="sub3" class="sub3">Created with love, just for you</p>
+    <button id="letterBtn" class="vault"><span>✦ Read my letter ✦</span></button>
+  </section>
+
+  <!-- TAHAP 4: Bento Grid Memories -->
+  <section class="stage" id="s4" data-stage="4">
+    <p class="eyebrow">✦ Our memories ✦</p>
+    <h2 id="h4" class="gold-h g4">Our Memories</h2>
+    <p id="sub4" class="sub3">every moment captured in love</p>
+    <div id="bento" class="bento"></div>
+    <button id="nextBtn" class="vault"><span>✦ Next · A moment for you ✦</span></button>
+  </section>
+
+  <!-- TAHAP 5: Cinema -->
+  <section class="stage" id="s5" data-stage="5">
+    <p class="eyebrow">✦ Now showing ✦</p>
+    <h2 class="display"><span class="ln l1 sm">Film Untukmu</span></h2>
+    <div class="cwrap" id="cwrap"><div class="amb" id="amb"></div>
+    <div class="cinema glass" id="cinema">
+      <video id="vid" playsinline preload="metadata"></video>
+      <div class="vph" id="vph">Video belum diisi<small>isi VIDEO_SRC di script.js</small></div>
+      <button id="vbig" class="vbig" aria-label="Putar video">▶</button>
+    </div></div>
+    <div class="vctl glass">
+      <button id="vplay" aria-label="Putar atau jeda">▶</button>
+      <input id="vseek" type="range" min="0" max="1000" value="0" aria-label="Posisi video">
+      <span id="vtime">0:00</span>
+      <button id="vmute" aria-label="Suara">🔊</button>
+    </div>
+    <button id="heartBtn" class="vault hid"><span>✦ Read my heart ✦</span></button>
+    <button id="back5" class="vault"><span>Kembali</span></button>
+  </section>
+
+  <!-- TAHAP 6: Glass Heart Typewriter -->
+  <section class="stage" id="s6" data-stage="6">
+    <p class="eyebrow">✦ Pesan dari hatiku ✦</p>
+    <div class="heart" id="heart">
+      
+      <div class="hfill"></div>
+      <svg class="hline" viewBox="0 0 1 1" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="hg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E6C594"/><stop offset=".5" stop-color="#fff6e6"/><stop offset="1" stop-color="#F2A6A6"/></linearGradient></defs><path d="M0.5 1C0.1 0.7 0 0.5 0 0.3C0 0.12 0.13 0 0.27 0C0.4 0 0.47 0.07 0.5 0.16C0.53 0.07 0.6 0 0.73 0C0.87 0 1 0.12 1 0.3C1 0.5 0.9 0.7 0.5 1Z" fill="none" stroke="url(#hg)" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>
+      <p class="htxt"><span><span id="twA"></span><span id="twB"></span></span></p>
+    </div>
+    <button id="lastBtn" class="vault hid"><span>✦ One last surprise ✦</span></button>
+  </section>
+
+  <!-- TAHAP 7: Grand Finale -->
+  <section class="stage" id="s7" data-stage="7">
+    <p class="eyebrow">✦ Happy Birthday ✦</p>
+    <h2 id="h7" class="gold-h g7">Selamat Ulang Tahun Sayangkuh Tercinta</h2>
+    <p id="sub7" class="sub3 s7t"></p>
+    <button id="growBtn" class="vault"><span>✦ See our love grow ✦</span></button>
+  </section>
+
+  <!-- TAHAP 8: The Growing Love Tree -->
+  <section class="stage" id="s8" data-stage="8">
+    <div class="petals" id="petals" aria-hidden="true"></div>
+    <svg id="tree" class="tree" viewBox="0 0 400 470" role="img" aria-label="Pohon cinta berbentuk hati">
+      <defs><linearGradient id="tg" gradientUnits="userSpaceOnUse" x1="0" y1="470" x2="0" y2="30"><stop offset="0" stop-color="#7a4f3a"/><stop offset=".55" stop-color="#c9a06a"/><stop offset="1" stop-color="#F2C9B0"/></linearGradient></defs>
+      <g id="tbr" fill="none" stroke="url(#tg)" stroke-linecap="round">
+        <path id="trunk" class="dr" stroke-width="9" d="M200 470C188 440 214 415 202 385C192 360 210 330 200 293"/>
+        <path class="dr root" stroke-width="4" d="M200 470C175 468 150 472 118 462"/>
+        <path class="dr root" stroke-width="4" d="M200 470C225 468 250 472 282 462"/>
+      </g>
+      <g id="tbl"></g>
+    </svg>
+    <p id="msg8" class="msg8">Semoga cinta dan kebahagiaan kita terus tumbuh dan mekar, sebagaimana pohon ini yang tak pernah berhenti berkembang...</p>
+    <button id="replayBtn" class="vault"><span>Replay our story ↺</span></button>
+  </section>
+</main>
+<div id="lb" class="lb" aria-hidden="true"><div class="lbc glass" role="dialog" aria-modal="true"><button id="lbx" class="lbx" aria-label="Tutup">✕</button><div class="lbm" id="lbm"></div><div class="lbt"><h3 id="lbh"></h3><p id="lbp"></p></div></div></div>
+<div id="hl" class="lb" aria-hidden="true"><button id="hlx" class="lbx" aria-label="Tutup">✕</button><div class="hz" id="hz"><div class="hz-ring"></div><div class="hz-in" id="hzIn"></div></div></div>
+<div id="mp" class="mp glass" aria-label="Pemutar musik">
+  <button id="mpPrev" aria-label="Lagu sebelumnya">‹</button>
+  <span class="mpt"><span class="eq"><i></i><i></i><i></i></span><b id="mpTitle">-</b></span>
+  <button id="mpPlay" aria-label="Putar atau matikan musik">▶</button>
+  <button id="mpNext" aria-label="Lagu berikutnya">›</button>
+</div>
+<div id="bird" class="bird" aria-hidden="true"><svg viewBox="0 0 130 100" width="130" height="100">
+  <defs><linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff6e6"/><stop offset="1" stop-color="#E6C594"/></linearGradient></defs>
+  <g id="wB"><polygon points="68,50 86,6 104,40" fill="#cfa86f" opacity=".85"/></g>
+  <polygon points="26,52 66,46 104,38 84,62 40,66" fill="url(#bg1)"/>
+  <polygon points="26,52 4,60 38,62" fill="#E6C594"/>
+  <polygon points="104,38 122,46 100,46" fill="#F2A6A6"/>
+  <path d="M66 46L84 62M66 46L40 66M104 38L66 46" stroke="rgba(255,255,255,.55)" stroke-width=".8" fill="none"/>
+  <g id="wA"><polygon points="62,50 40,4 82,38" fill="url(#bg1)"/><path d="M62 50L58 22M62 50L72 28" stroke="rgba(255,255,255,.6)" stroke-width=".8" fill="none"/></g>
+</svg></div>
+<script src="script.js"></script>
+</body>
+</html>
